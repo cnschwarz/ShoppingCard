@@ -1,5 +1,9 @@
 {
   "extends": "tslint:recommended",
+  "variable-name": [true,
+    "check-format",
+    "allow-leading-underscore"
+  ],
   "rules": {
     "array-type": false,
     "arrow-parens": false,

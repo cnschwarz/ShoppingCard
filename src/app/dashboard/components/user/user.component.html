@@ -1,0 +1,88 @@
+<mat-card *ngIf="user">
+  <mat-card-title>
+    <ng-template>
+      Benutzer Informationen
+    </ng-template>
+  </mat-card-title>
+  <mat-card-content>
+    <mat-card *ngIf="!user.isAnonymous">
+      <mat-card-title>
+        Profile anpassen
+      </mat-card-title>
+      <form [formGroup]="changeUserData" novalidate (ngSubmit)="onChange()" autocomplete="off">
+        <mat-form-field>
+          <input formControlName="displayName" matInput placeholder="Anzeigename" type="text">
+        </mat-form-field>
+        <button mat-button type="submit">Profile speichern</button>
+      </form>
+      <form [formGroup]="changeUserData" novalidate (ngSubmit)="onChange()" autocomplete="off">
+        <mat-form-field>
+          <input formControlName="pwd" matInput placeholder="Passwort Alt" type="password" autocomplete="off">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="pwdOld" matInput placeholder="Passwort Neu" type="password" autocomplete="off">
+        </mat-form-field>
+        <button mat-button type="submit" [disabled]="!(changeUserData.valid && changeUserData.touched)">Passwort
+          wechseln
+        </button>
+      </form>
+    </mat-card>
+
+
+    <mat-card *ngIf="user.isAnonymous">
+      <mat-card-title>
+        Dieser Account ist nicht mit einer E-Mail verbunden. Listen können verloren gehen!
+        Sie können ihren Account mit einem neuem Account verbinden oder sich mit einem bestehemden Account anmelden.
+      </mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="connectUserData" novalidate>
+          <mat-form-field>
+            <input formControlName="email" matInput placeholder="E-Mail" type="email">
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="pwd" matInput placeholder="Passwort" type="password">
+          </mat-form-field>
+          <button mat-flat-button type="submit" (click)="onSubmit(connectUserData.value, true)">Neuer Account
+            erstellen
+          </button>
+          <button mat-flat-button (click)="onSubmit(connectUserData.value, false)">Anmelden</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-title>
+        Passwort vergessen?
+      </mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="pwdResetData" novalidate>
+          <mat-form-field>
+            <input formControlName="email" matInput placeholder="E-Mail" type="email">
+          </mat-form-field>
+          <button mat-flat-button type="submit" (click)="onReset(pwdResetData.value.email, true)">Passwort
+            zurücksetzten
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+  <mat-card>
+    <mat-card-title>
+      Benachrichtungen
+    </mat-card-title>
+    <mat-card-content>
+      <ng-template [ngIf]="notificationToken">
+        <p>
+          Sie erhalten Nachrichten falls neue Einträge hinzugefügt werden.
+        </p>
+        <button mat-flat-button type="submit" (click)="onRemoveNotification()">Keine Benachrichtungen mehr erhalten.</button>
+      </ng-template>
+      <ng-template [ngIf]="!notificationToken">
+        <p>
+          Sie können die Benachrichtungen aktivieren. Sie werden benachrichtet, falls sich in einer der Liste sich was ändert
+        </p>
+        <button mat-flat-button type="submit" (click)="onAddNotification()">Benachrichtungen aktivieren.</button>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+</mat-card>
