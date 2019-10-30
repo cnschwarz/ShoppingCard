@@ -9,12 +9,21 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../../environments/environment';
 import {GlobalErrorHandler} from './services/global-error.handler';
+import {StoreModule} from '@ngrx/store';
+import {metaReducers, reducers} from './state';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,

@@ -13,6 +13,8 @@ import {metaReducers, reducers} from './core/core/state';
 import {AppEffects} from './core/core/state/core/app.effects';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core/core/core.module';
+import {ShoppinglistModule} from './shoppinglist/shoppinglist.module';
+import {DashboardModule} from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -24,13 +26,7 @@ import {CoreModule} from './core/core/core.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    StoreModule.forRoot(reducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true
-      }
-    }),
+    DashboardModule,
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})

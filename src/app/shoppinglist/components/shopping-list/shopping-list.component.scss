@@ -1,0 +1,9 @@
+:host ::ng-deep .mat-tab-link:last-of-type  {
+  margin-left: auto;
+  min-width: 60px !important;
+}
+
+
+:host ::ng-deep .mat-tab-links{
+  display: flex;
+}

@@ -1,0 +1,21 @@
+.mat-list-item{
+  display: flex;
+}
+
+.mat-list-item mat-icon{
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.mat-list-item:nth-of-type(even)
+{
+  background: lightgray;
+}
+
+:host ::ng-deep .mat-checkbox-layout{
+  flex: 1 1 auto;
+}
+
+.finished{
+  opacity: 0.5;
+}
