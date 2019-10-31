@@ -38,7 +38,7 @@ export class AppComponent {
       horizontalPosition: 'right',
     }).afterDismissed().subscribe(() => {
       this.openSnackbar = false;
-      this.store.dispatch(removeMessage(errorObj));
+      this.store.dispatch(removeMessage({item : errorObj}));
     });
   }
 }

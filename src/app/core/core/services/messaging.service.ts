@@ -10,6 +10,7 @@ import {take} from 'rxjs/operators';
 
 import {AngularFirestore} from '@angular/fire/firestore';
 import {
+  message,
   notificationGrantExist,
   notificationGrantForbidden,
   notificationGrantNotExist,
@@ -60,13 +61,15 @@ export class MessagingService {
   }
 
   requestPermission() {
-    return from(this.messaging.requestPermission()
+
+    return from(Notification.requestPermission()
       .then(() => {
         return this.messaging.getToken();
       })
       .then(token => {
         this.updateToken(token);
         this.store.dispatch(notificationGrantSuccess({token}));
+        this.store.dispatch(message({message: 'Danke für Ihre Zustimmung'}));
       })
       .catch((err) => {
         this.store.dispatch(notificationGrantForbidden());

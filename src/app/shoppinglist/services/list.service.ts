@@ -33,7 +33,6 @@ export class ListService extends BaseService<List> {
   }
 
   addList(description: string) {
-    debugger;
     return from(this.db.collection<List>('list')
       .add({
         description,

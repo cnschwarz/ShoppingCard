@@ -29,7 +29,7 @@
     </mat-card>
 
 
-    <mat-card *ngIf="user.isAnonymous">
+    <mat-card *ngIf="user.isAnonymous" class="test-anonymous-login-card">
       <mat-card-title>
         Dieser Account ist nicht mit einer E-Mail verbunden. Listen können verloren gehen!
         Sie können ihren Account mit einem neuem Account verbinden oder sich mit einem bestehemden Account anmelden.
@@ -42,8 +42,8 @@
           <mat-form-field>
             <input formControlName="pwd" matInput placeholder="Passwort" type="password">
           </mat-form-field>
-          <button mat-flat-button type="submit" (click)="onSubmit(connectUserData.value, true)">Neuer Account
-            erstellen
+          <button mat-flat-button type="submit" (click)="onSubmit(connectUserData.value, true)">
+            Neuer Account erstellen
           </button>
           <button mat-flat-button (click)="onSubmit(connectUserData.value, false)">Anmelden</button>
         </form>

@@ -37,7 +37,8 @@ export const reducer = createReducer(
     };
   }),
   on(Actions.authChanged, (state, action) => ({...state, user: action})),
-  on(Actions.removeMessage, (state, action) => ({...state, messages: state.messages.filter(x => x !== action.item)})),
+    on(Actions.message, (state, action) => ({...state, messages: [...state.messages, {id : new Date().toISOString(), message: action.message, type: action.type}]})),
+  on(Actions.removeMessage, (state, action) => ({...state, messages: state.messages.filter(x => x.id !== action.item.id)})),
 );
 
 

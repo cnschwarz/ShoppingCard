@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 
 
-import {map, switchMap, catchError} from 'rxjs/operators';
+import {catchError, flatMap, map, switchMap} from 'rxjs/operators';
 import {selectIsOnline, State} from '../index';
-import {delayWhenObservable} from '../../util/delayWhen';
-
 import {Store} from '@ngrx/store';
 import {Observable, of} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
@@ -19,9 +17,12 @@ import {
   authResetPwdSuccess,
   authUserSettingsChanged,
   init,
-  initSuccess, notificationGrantRequest, removeNotificationGrant, removeNotificationGrantSuccess
+  initSuccess,
+  message,
+  notificationGrantRequest,
+  removeNotificationGrant,
+  removeNotificationGrantSuccess
 } from './actions';
-import {AuthConnect} from './model';
 
 
 @Injectable()
@@ -34,7 +35,6 @@ export class AppEffects {
 
   load$ = createEffect(() => this.actions$.pipe(
     ofType(init),
-    delayWhenObservable(() => this.isOnline$),
     map(res => initSuccess())
   ));
 
@@ -62,7 +62,10 @@ export class AppEffects {
     ofType(authResetPwd),
     switchMap((data) => {
       return this.authService.resetPwdMail(data.email).pipe(
-        map(res => authResetPwdSuccess()),
+        flatMap(res => [
+          authResetPwdSuccess(),
+          message({message: 'E-Mail wurde versendet'})
+        ]),
         catchError((error) => of(authConnectError(error)))
       );
     }),
@@ -72,7 +75,10 @@ export class AppEffects {
     ofType(authUserSettingsChanged),
     switchMap((data) => {
       return this.authService.changeUser(data).pipe(
-        map(res => authChanged(res)),
+        flatMap(res => [
+          authChanged(res),
+          message({message: 'Änderung übernommen'})
+        ]),
         catchError((error) => of(authConnectError(error)))
       );
     }),
@@ -89,7 +95,10 @@ export class AppEffects {
     ofType(removeNotificationGrant),
     switchMap((data) => {
       return this.messageService.removePermission(data.token).pipe(
-        map(() => removeNotificationGrantSuccess()),
+        flatMap(res => [
+          removeNotificationGrantSuccess(),
+          message({message: 'Erfolgreich abgemeldet.'})
+        ]),
         catchError((error) => of(authConnectError(error)))
       );
     }),

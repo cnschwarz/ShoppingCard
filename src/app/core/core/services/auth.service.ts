@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {Store} from '@ngrx/store';
-import { AngularFireAuth } from '@angular/fire/auth';
+import {AngularFireAuth} from '@angular/fire/auth';
 import {User as fireBaseUser} from 'firebase';
 import * as firebase from 'firebase/app';
 
@@ -38,6 +38,13 @@ export class AuthService {
     });
   }
 
+  async delete(data: AuthUserSettingsChange) {
+    const cred = firebase.auth.EmailAuthProvider.credential(data.email, data.pwdOld);
+    await this.afAuth.auth.currentUser.reauthenticateWithCredential(cred);
+    await this.afAuth.auth.currentUser.delete().then(() => {
+      return this.afAuth.auth.signInAnonymously();
+    });
+  }
 
   resetPwdMail(email: string): Observable<any> {
     return from(this.afAuth.auth.sendPasswordResetEmail(email));

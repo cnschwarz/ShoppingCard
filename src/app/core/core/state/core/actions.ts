@@ -79,4 +79,3 @@ export class RemoveNotification {
   public targetId?: string;
   public containerId?: string;
 }
-
