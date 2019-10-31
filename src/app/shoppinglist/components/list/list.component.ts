@@ -7,12 +7,13 @@ import {Item} from '../../model/item';
 import {getSelectedItems} from '../../state/items';
 import {getSelectedList} from '../../state/lists';
 import * as firebase from 'firebase';
-import {NotificationData} from '../../../core/core/state/core/actions';
-import {StoreDto} from '../../../core/core/model/dto';
+import {NotificationData} from '../../../core/state/core/actions';
+import {StoreDto} from '../../../core/model/dto';
 import {ListState} from '../../state/lists/reducer';
 import {removeShareList, selectList} from '../../state/lists/actions';
-import {addItem, removeItem, updateItem} from '../../state/items/actions';
-import {selectNotificationForList, State} from '../../../core/core/state';
+import {add, remove, update} from '../../state/items/actions';
+import {selectNotificationForList, State} from '../../../core/state';
+import {ItemsActions, ListActions} from '../../state';
 
 
 @Component({
@@ -63,12 +64,12 @@ export class ListComponent {
 
   public removeList(list: List) {
 
-    this.store.dispatch(removeShareList({id: this.list.id}));
+    this.store.dispatch(ListActions.removeShareList({id: this.list.id}));
     this.router.navigateByUrl('/');
   }
 
   public addItem(item?: Item) {
-    this.store.dispatch(addItem({
+    this.store.dispatch(ItemsActions.add({
       item: item ?
         item : {description: this.addNewItemText, listId: this.list.id}
     }));
@@ -78,14 +79,14 @@ export class ListComponent {
   public checkItem(item: Item) {
     if (item.boughtAt == null) {
       item.boughtAt = firebase.firestore.Timestamp.now();
-      this.store.dispatch(updateItem({item}));
+      this.store.dispatch(ItemsActions.update({item}));
     } else {
       this.addItem({description: item.description, listId: item.listId});
     }
   }
 
   public removeItem(event: Event, item: Item) {
-    this.store.dispatch(removeItem({id: item.id}));
+    this.store.dispatch(ItemsActions.remove({id: item.id}));
     event.stopPropagation();
   }
 }
@@ -104,7 +105,7 @@ export class ListPageComponent implements OnInit {
   constructor(private coreStore: Store<State>, private store: Store<ListState>, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe(params => {
       const id = params.id;
-      store.dispatch(selectList({id}));
+      store.dispatch(ListActions.selectList({id}));
       this.list$ = this.store.select(getSelectedList);
       this.items$ = this.store.select(getSelectedItems);
       this.notifications$ = this.coreStore.select(selectNotificationForList(id));

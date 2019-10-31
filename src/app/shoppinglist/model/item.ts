@@ -1,6 +1,6 @@
 
 import * as firebase from 'firebase';
-import {DTO} from '../../core/core/model/dto';
+import {DTO} from '../../core/model/dto';
 
 
 export interface Item extends DTO {

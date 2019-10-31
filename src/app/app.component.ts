@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import {Observable} from 'rxjs';
-import {AuthUser} from './core/core/state/core/model';
+import {AuthUser} from './core/state/core/model';
 import {Store} from '@ngrx/store';
-import {selectIsOnline, selectMessages, selectUser, State} from './core/core/state';
+import {selectIsOnline, selectMessages, selectUser, State} from './core/state';
 import {MatSnackBar} from '@angular/material';
-import {removeMessage} from './core/core/state/core/actions';
+import {removeMessage} from './core/state/core/actions';
+import * as CoreActions from './core/state/core/actions';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,7 @@ export class AppComponent {
       horizontalPosition: 'right',
     }).afterDismissed().subscribe(() => {
       this.openSnackbar = false;
-      this.store.dispatch(removeMessage({item : errorObj}));
+      this.store.dispatch(CoreActions.removeMessage({item : errorObj}));
     });
   }
 }

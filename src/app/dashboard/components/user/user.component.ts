@@ -4,15 +4,16 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthUser} from '../../../core/core/state/core/model';
-import {selectNotificationToken, selectUser, State} from '../../../core/core/state';
+import {AuthUser} from '../../../core/state/core/model';
+import {selectNotificationToken, selectUser, State} from '../../../core/state';
 import {
   authConnect,
   authLogin,
   authResetPwd,
   authUserSettingsChanged, notificationGrantRequest,
   removeNotificationGrant
-} from '../../../core/core/state/core/actions';
+} from '../../../core/state/core/actions';
+import * as CoreActions from '../../../core/state/core/actions';
 
 
 @Component({
@@ -49,29 +50,29 @@ export class UserComponent implements OnInit {
     const data = this.changeUserData.getRawValue();
     data.pwd = this.changeUserData.controls.pwd.dirty ? data.pwd : undefined;
     if (this.changeUserData.valid) {
-      this.store.dispatch(authUserSettingsChanged(data));
+      this.store.dispatch(CoreActions.authUserSettingsChanged(data));
     }
   }
 
   onSubmit(user, isNew: boolean) {
     if (isNew) {
-      this.store.dispatch(authConnect(user));
+      this.store.dispatch(CoreActions.authConnect(user));
     } else {
-      this.store.dispatch(authLogin(user));
+      this.store.dispatch(CoreActions.authLogin(user));
     }
   }
 
   onReset(email: string) {
-    this.store.dispatch(authResetPwd({email: this._user.email}));
+    this.store.dispatch(CoreActions.authResetPwd({email: this._user.email}));
     this.ngOnInit();
   }
 
   onRemoveNotification() {
-    this.store.dispatch(removeNotificationGrant({token: this.notificationToken}));
+    this.store.dispatch(CoreActions.removeNotificationGrant({token: this.notificationToken}));
   }
 
   onAddNotification() {
-    this.store.dispatch(notificationGrantRequest());
+    this.store.dispatch(CoreActions.notificationGrantRequest());
   }
 
   ngOnInit() {

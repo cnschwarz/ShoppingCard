@@ -3,7 +3,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 
 
 import {catchError, flatMap, map, switchMap} from 'rxjs/operators';
-import {selectIsOnline, State} from '../index';
+import {selectIsOnline, State} from '..';
 import {Store} from '@ngrx/store';
 import {Observable, of} from 'rxjs';
 import {AuthService} from '../../services/auth.service';

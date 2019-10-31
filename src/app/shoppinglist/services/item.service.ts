@@ -9,9 +9,10 @@ import {of} from 'rxjs';
 import * as firebase from 'firebase';
 import {AngularFirestore, DocumentChangeAction} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {CoreState} from '../../core/core/state/core/reducer';
+import {CoreState} from '../../core/state/core/reducer';
 import {loadListSuccess} from '../state/lists/actions';
-import {removeItemSuccess} from '../state/items/actions';
+import {removeSuccess} from '../state/items/actions';
+import {ItemsActions, ListActions} from '../state';
 
 
 const momentConstructor = moment;
@@ -60,11 +61,11 @@ export class ItemService extends BaseService<Item> {
     }
     for (const action of toSend.filter(x => x.length > 0)) {
       if (action[0].type === 'added' || action[0].type === 'modified') {
-        this.store.dispatch(loadListSuccess({
+        this.store.dispatch(ListActions.loadListSuccess({
           id, items: action.map((item) => <Item> {id: item.payload.doc.id, ...item.payload.doc.data()})
         }));
       } else if (action[0].type === 'removed') {
-        this.store.dispatch(removeItemSuccess({ids: action.map((item) => item.payload.doc.id)}));
+        this.store.dispatch(ItemsActions.removeSuccess({ids: action.map((item) => item.payload.doc.id)}));
       }
     }
   }

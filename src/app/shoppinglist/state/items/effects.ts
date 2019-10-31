@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 import {ListService} from '../../services/list.service';
 import {ItemService} from '../../services/item.service';
 import * as ListActions from '../lists/actions';
-import {addItem, removeItem, updateItem} from './actions';
+import {add, remove, update} from './actions';
 
 @Injectable()
 export class ShoppingItemsEffects {
@@ -15,29 +15,29 @@ export class ShoppingItemsEffects {
   constructor(private actions$: Actions, private listService: ListService, private itemService: ItemService) {
   }
 
-  getItems$ = createEffect(() => this.actions$.pipe(
+  get$ = createEffect(() => this.actions$.pipe(
     ofType(ListActions.selectList, ListActions.loadList),
     flatMap(data => {
       return this.itemService.getFromList(data.id);
     })
   ), {dispatch: false});
 
-  addItem$ = createEffect(() => this.actions$.pipe(
-    ofType(addItem),
+  add$ = createEffect(() => this.actions$.pipe(
+    ofType(add),
     flatMap(data => {
       return this.itemService.add(data.item);
     })
   ), {dispatch: false});
 
-  removeItem$ = createEffect(() => this.actions$.pipe(
-    ofType(removeItem),
+  remove$ = createEffect(() => this.actions$.pipe(
+    ofType(remove),
     flatMap(data => {
       return this.itemService.remove(data.id);
     })
   ), {dispatch: false});
 
-  updateItem$ = createEffect(() => this.actions$.pipe(
-    ofType(updateItem),
+  update$ = createEffect(() => this.actions$.pipe(
+    ofType(update),
     flatMap(data => {
       return this.itemService.update(data.item);
     })

@@ -7,9 +7,10 @@ import {BaseService} from './base.service';
 import {from} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {CoreState} from '../../core/core/state/core/reducer';
+import {CoreState} from '../../core/state/core/reducer';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {readList} from '../state/lists/actions';
+import {ListActions} from '../state';
 
 @Injectable({providedIn: 'root'})
 export class ListService extends BaseService<List> {
@@ -51,6 +52,6 @@ export class ListService extends BaseService<List> {
   }
 
   listChanged(lists: List[]) {
-    this.store.dispatch(readList({lists}));
+    this.store.dispatch(ListActions.readList({lists}));
   }
 }

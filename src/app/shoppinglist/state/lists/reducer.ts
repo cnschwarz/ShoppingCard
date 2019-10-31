@@ -3,7 +3,7 @@ import {createReducer, on} from '@ngrx/store';
 import * as ListActions from './actions';
 import {createEntityAdapter, EntityState} from '@ngrx/entity';
 import {List} from '../../model/list';
-import {StoreDto} from '../../../core/core/model/dto';
+import {StoreDto} from '../../../core/model/dto';
 
 export interface ListState extends EntityState<StoreDto<List>> {
   selectedListId: string;

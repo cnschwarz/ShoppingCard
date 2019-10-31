@@ -9,31 +9,32 @@ export class ShoppingListEffects {
   constructor(private actions$: Actions, private listService: ListService) {
   }
 
-  addList$ = createEffect(() => this.actions$.pipe(
+  add$ = createEffect(() => this.actions$.pipe(
     ofType(ListActions.add),
     flatMap(data => {
       return this.listService.addList(data.description);
     })
   ), {dispatch: false});
 
-  addSharedList$ = createEffect(() => this.actions$.pipe(
-    ofType(ListActions.addShareList),
+  update$ = createEffect(() => this.actions$.pipe(
+    ofType(ListActions.update),
     flatMap(data => {
-      return  this.listService.addShareList(data.id);
+      return this.listService.update(data.item);
     })
   ), {dispatch: false});
 
-  updateList$ = createEffect(() => this.actions$.pipe(
-    ofType(ListActions.update),
+  addSharedList$ = createEffect(() => this.actions$.pipe(
+    ofType(ListActions.addShareList),
     flatMap(data => {
-      return  this.listService.update(data.item);
+      return this.listService.addShareList(data.id);
     })
   ), {dispatch: false});
+
 
   removeSharedList$ = createEffect(() => this.actions$.pipe(
     ofType(ListActions.removeShareList),
     flatMap(data => {
-      return  this.listService.removeShareList(data.id);
+      return this.listService.removeShareList(data.id);
     })
   ), {dispatch: false});
 }

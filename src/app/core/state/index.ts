@@ -1,12 +1,11 @@
-import {
-  Action,
-  ActionReducerMap, createSelector,
-  MetaReducer
-} from '@ngrx/store';
+import {ActionReducerMap, createSelector, MetaReducer} from '@ngrx/store';
 
-import {reducer as coreReducer, CoreState} from './core/reducer';
-import {environment} from '../../../../environments/environment';
+import {CoreState, reducer as coreReducer} from './core/reducer';
+import {environment} from '../../../environments/environment';
 
+import * as CoreActions from './core/actions';
+
+export {CoreActions};
 
 export interface State {
   core: CoreState;

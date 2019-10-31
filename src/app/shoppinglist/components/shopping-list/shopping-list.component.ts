@@ -6,11 +6,12 @@ import {List} from '../../model/list';
 import {Observable} from 'rxjs';
 import {MatDialog, MatTabChangeEvent} from '@angular/material';
 import {AddItemDialogComponent} from './add-item-dialog/add-item-dialog.component';
-import {StoreDto} from '../../../core/core/model/dto';
-import {NotificationData} from '../../../core/core/state/core/actions';
+import {StoreDto} from '../../../core/model/dto';
+import {NotificationData} from '../../../core/state/core/actions';
 import {ListState} from '../../state/lists/reducer';
 import {add, update} from '../../state/lists/actions';
-import {selectNotifications, State} from '../../../core/core/state';
+import {selectNotifications, State} from '../../../core/state';
+import {ItemsActions, ListActions} from '../../state';
 
 
 @Component({
@@ -45,10 +46,10 @@ export class ShoppingListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (isNew) {
-          this.store.dispatch(add(result));
+          this.store.dispatch(ListActions.add(result));
         } else {
           list.description = result.description;
-          this.store.dispatch(update({item: list}));
+          this.store.dispatch(ListActions.update({item: list}));
         }
 
       }

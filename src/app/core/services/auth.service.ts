@@ -10,6 +10,7 @@ import {Observable, from, defer} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {CoreState} from '../state/core/reducer';
 import {authChanged} from '../state/core/actions';
+import {CoreActions} from '../state';
 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class AuthService {
       if (user === null) {
         afAuth.auth.signInAnonymously();
       } else {
-        state.dispatch(authChanged(new AuthUser(user)));
+        state.dispatch(CoreActions.authChanged(new AuthUser(user)));
       }
     });
   }

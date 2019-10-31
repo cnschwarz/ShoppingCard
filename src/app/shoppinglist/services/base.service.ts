@@ -1,8 +1,8 @@
 import {Store} from '@ngrx/store';
 
 import {from, Subscription} from 'rxjs';
-import {DTO} from '../../core/core/model/dto';
-import {CoreState} from '../../core/core/state/core/reducer';
+import {DTO} from '../../core/model/dto';
+import {CoreState} from '../../core/state/core/reducer';
 import {AngularFirestore, QueryFn} from '@angular/fire/firestore';
 
 

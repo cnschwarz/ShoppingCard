@@ -17,16 +17,22 @@ import {
   notificationGrantSuccess, notificationSuccess
 } from '../state/core/actions';
 import {CoreState} from '../state/core/reducer';
+import * as CoreActions from '../state/core/actions';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessagingService {
+  private messaging: firebase.messaging.Messaging;
 
-  messaging = firebase.messaging();
 
   constructor(private db: AngularFirestore, private afAuth: AngularFireAuth, private store: Store<CoreState>) {
+    if (firebase.messaging.isSupported()) {
+      this.messaging = firebase.messaging();
+    }
+
+    debugger;
   }
 
 
@@ -44,12 +50,16 @@ export class MessagingService {
   }
 
   getPermission() {
+    if (this.messaging == null) {
+      this.store.dispatch(CoreActions.notificationGrantNotExist());
+      return;
+    }
     this.messaging.getToken().then(token => {
       if (token) {
         this.updateToken(token);
-        this.store.dispatch(notificationGrantExist({token}));
+        this.store.dispatch(CoreActions.notificationGrantExist({token}));
       } else {
-        this.store.dispatch(notificationGrantNotExist());
+        this.store.dispatch(CoreActions.notificationGrantNotExist());
       }
     });
 
@@ -68,11 +78,11 @@ export class MessagingService {
       })
       .then(token => {
         this.updateToken(token);
-        this.store.dispatch(notificationGrantSuccess({token}));
-        this.store.dispatch(message({message: 'Danke für Ihre Zustimmung'}));
+        this.store.dispatch(CoreActions.notificationGrantSuccess({token}));
+        this.store.dispatch(CoreActions.message({message: 'Danke für Ihre Zustimmung'}));
       })
       .catch((err) => {
-        this.store.dispatch(notificationGrantForbidden());
+        this.store.dispatch(CoreActions.notificationGrantForbidden());
       }));
   }
 
@@ -85,8 +95,10 @@ export class MessagingService {
 
 
   receiveMessage() {
-    this.messaging.onMessage((payload) => {
-      this.store.dispatch(notificationSuccess(payload));
-    });
+    if (this.messaging != null) {
+      this.messaging.onMessage((payload) => {
+        this.store.dispatch(CoreActions.notificationSuccess(payload));
+      });
+    }
   }
 }

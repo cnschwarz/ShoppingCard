@@ -1,4 +1,4 @@
-import {DTO} from '../../core/core/model/dto';
+import {DTO} from '../../core/model/dto';
 
 export interface List extends DTO {
   description: string;

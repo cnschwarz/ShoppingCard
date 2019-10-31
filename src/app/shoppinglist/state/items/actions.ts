@@ -3,15 +3,14 @@ import {createAction, props} from '@ngrx/store';
 
 const key = 'SHOP';
 
-export const addItem = createAction(`[${key}] Add`,
+export const add = createAction(`[${key}] Add`,
   props<{item: Item}>());
 
-export const updateItem = createAction(`[${key}] Update`,
+export const update = createAction(`[${key}] Update`,
   props<{item: Item}>());
 
-
-export const removeItem = createAction(`[${key}] Remove`,
+export const remove = createAction(`[${key}] Remove`,
   props<{id: string}>());
 
-export const removeItemSuccess = createAction(`[${key}] Remove Success`,
+export const removeSuccess = createAction(`[${key}] Remove Success`,
   props<{ids: string[]}>());

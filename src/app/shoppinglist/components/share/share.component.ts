@@ -3,6 +3,7 @@ import {Store} from '@ngrx/store';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ListState} from '../../state/lists/reducer';
 import {addShareList} from '../../state/lists/actions';
+import {ListActions} from '../../state';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class ShareComponent implements OnInit {
   }
 
   addShare() {
-    this.store.dispatch(addShareList({id: this.shareId}));
+    this.store.dispatch(ListActions.addShareList({id: this.shareId}));
     this.router.navigateByUrl('/list/' + this.shareId);
   }
 
