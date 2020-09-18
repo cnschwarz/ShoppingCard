@@ -34,7 +34,7 @@ export abstract class BaseService<T extends DTO> {
     return this.db.doc(`${this.collectionName}/${id}`);
   }
 
-  add(item: T) {
+  async add(item: T) {
     return from(this.collection.add(item));
   }
 

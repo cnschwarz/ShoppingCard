@@ -1,7 +1,6 @@
 import {ErrorHandler, Injectable, Injector} from '@angular/core';
 import {Store} from '@ngrx/store';
 
-import {addError} from '../state/core/actions';
 import * as CoreActions from '../state/core/actions';
 
 

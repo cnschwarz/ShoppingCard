@@ -38,11 +38,11 @@ export class ItemService extends BaseService<Item> {
     return of(true);
   }
 
-  add(item: Item) {
+  async add(item: Item) {
     item = {...item};
     item.boughtAt = null;
     item.createdAt = firebase.firestore.Timestamp.now();
-    item.createdBy = this.afAuth.auth.currentUser.uid;
+    item.createdBy = (await this.afAuth.currentUser).uid;
     return super.add(item);
   }
 

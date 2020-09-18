@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
-import * as firebase from 'firebase/app';
-import 'firebase/messaging';
+import {messaging} from 'firebase/app';
+
+import {AngularFireMessaging} from '@angular/fire/messaging';
+
 
 import {AngularFireAuth} from '@angular/fire/auth';
 
@@ -9,13 +11,6 @@ import {from, defer, Observable} from 'rxjs';
 import {take} from 'rxjs/operators';
 
 import {AngularFirestore} from '@angular/fire/firestore';
-import {
-  message,
-  notificationGrantExist,
-  notificationGrantForbidden,
-  notificationGrantNotExist,
-  notificationGrantSuccess, notificationSuccess
-} from '../state/core/actions';
 import {CoreState} from '../state/core/reducer';
 import * as CoreActions from '../state/core/actions';
 
@@ -27,12 +22,11 @@ export class MessagingService {
   private messaging: firebase.messaging.Messaging;
 
 
-  constructor(private db: AngularFirestore, private afAuth: AngularFireAuth, private store: Store<CoreState>) {
-    if (firebase.messaging.isSupported()) {
-      this.messaging = firebase.messaging();
-    }
+  constructor(private afMessaging: AngularFireMessaging, private db: AngularFirestore, private afAuth: AngularFireAuth, private store: Store<CoreState>) {
 
-    debugger;
+    if (messaging.isSupported()) {
+      this.messaging = messaging();
+    }
   }
 
 
@@ -46,7 +40,7 @@ export class MessagingService {
   }
 
   async removeToken(token) {
-    await this.db.collection('fcmTokens').doc(this.afAuth.auth.currentUser.uid).delete();
+    await this.db.collection('fcmTokens').doc((await this.afAuth.currentUser).uid).delete();
   }
 
   getPermission() {
@@ -64,6 +58,7 @@ export class MessagingService {
     });
 
     // it can be that the token gets refreshed => send the new token to the server
+    // onTokenRefresh -> should be onNewToken but not available
     this.messaging.onTokenRefresh(value => {
       this.messaging.getToken()
         .then(token => this.updateToken(token));

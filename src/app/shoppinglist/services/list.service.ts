@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 import {List} from '../model/list';
 import * as firebase from 'firebase/app';
 import {BaseService} from './base.service';
-import {from} from 'rxjs';
+import {defer, from} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {CoreState} from '../../core/state/core/reducer';
@@ -17,7 +17,8 @@ export class ListService extends BaseService<List> {
 
   constructor(store: Store<CoreState>, db: AngularFirestore, public afAuth: AngularFireAuth) {
     super('list', store, db);
-    afAuth.auth.onAuthStateChanged((user?: firebase.User) => {
+
+    afAuth.onAuthStateChanged((user?: firebase.User) => {
       if (user !== null) {
         this.clearSubscription();
 
@@ -34,21 +35,25 @@ export class ListService extends BaseService<List> {
   }
 
   addList(description: string) {
-    return from(this.db.collection<List>('list')
-      .add({
-        description,
-        owner: {[this.afAuth.auth.currentUser.uid]: true}
-      })
-    );
+    return defer(async () => {
+      const currentUser = await this.afAuth.currentUser;
+      return this.db.collection<List>('list').add({description, owner: {[currentUser.uid]: true}});
+    });
   }
 
-
   addShareList(listId: string) {
-    return from(this.db.doc(`list/${listId}`).set({owner: {[this.afAuth.auth.currentUser.uid]: true}}, {merge: true}));
+
+    return defer(async () => {
+      const currentUser = await this.afAuth.currentUser;
+      return this.db.doc(`list/${listId}`).set({owner: {[currentUser.uid]: true}}, {merge: true});
+    });
   }
 
   removeShareList(listId: string) {
-    return from(this.db.doc(`list/${listId}`).set({owner: {[this.afAuth.auth.currentUser.uid]: false}}, {merge: true}));
+    return defer(async () => {
+      const currentUser = await this.afAuth.currentUser;
+      return this.db.doc(`list/${listId}`).set({owner: {[currentUser.uid]: false}}, {merge: true});
+    });
   }
 
   listChanged(lists: List[]) {

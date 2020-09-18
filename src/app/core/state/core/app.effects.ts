@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 
 
-import {catchError, flatMap, map, switchMap} from 'rxjs/operators';
+import {catchError, map, mergeMap, switchMap} from 'rxjs/operators';
 import {selectIsOnline, State} from '..';
 import {Store} from '@ngrx/store';
-import {Observable, of} from 'rxjs';
+import { Observable, of} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
 import {MessagingService} from '../../services/messaging.service';
 import {
@@ -62,7 +62,7 @@ export class AppEffects {
     ofType(authResetPwd),
     switchMap((data) => {
       return this.authService.resetPwdMail(data.email).pipe(
-        flatMap(res => [
+        mergeMap(res => [
           authResetPwdSuccess(),
           message({message: 'E-Mail wurde versendet'})
         ]),
@@ -75,7 +75,7 @@ export class AppEffects {
     ofType(authUserSettingsChanged),
     switchMap((data) => {
       return this.authService.changeUser(data).pipe(
-        flatMap(res => [
+        mergeMap(res => [
           authChanged(res),
           message({message: 'Änderung übernommen'})
         ]),
@@ -95,7 +95,7 @@ export class AppEffects {
     ofType(removeNotificationGrant),
     switchMap((data) => {
       return this.messageService.removePermission(data.token).pipe(
-        flatMap(res => [
+        mergeMap(res => [
           removeNotificationGrantSuccess(),
           message({message: 'Erfolgreich abgemeldet.'})
         ]),

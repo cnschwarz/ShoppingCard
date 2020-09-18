@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {flatMap} from 'rxjs/operators';
+import {mergeMap} from 'rxjs/operators';
 
-import {Observable} from 'rxjs';
+import {from, Observable} from 'rxjs';
 import {ListService} from '../../services/list.service';
 import {ItemService} from '../../services/item.service';
 import * as ListActions from '../lists/actions';
@@ -17,28 +17,28 @@ export class ShoppingItemsEffects {
 
   get$ = createEffect(() => this.actions$.pipe(
     ofType(ListActions.selectList, ListActions.loadList),
-    flatMap(data => {
+    mergeMap(data => {
       return this.itemService.getFromList(data.id);
     })
   ), {dispatch: false});
 
   add$ = createEffect(() => this.actions$.pipe(
     ofType(add),
-    flatMap(data => {
-      return this.itemService.add(data.item);
+    mergeMap(data => {
+      return from(this.itemService.add(data.item));
     })
   ), {dispatch: false});
 
   remove$ = createEffect(() => this.actions$.pipe(
     ofType(remove),
-    flatMap(data => {
+    mergeMap(data => {
       return this.itemService.remove(data.id);
     })
   ), {dispatch: false});
 
   update$ = createEffect(() => this.actions$.pipe(
     ofType(update),
-    flatMap(data => {
+    mergeMap(data => {
       return this.itemService.update(data.item);
     })
   ), {dispatch: false});

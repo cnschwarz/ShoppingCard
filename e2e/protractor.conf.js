@@ -13,7 +13,12 @@ exports.config = {
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    browserName: 'chrome'
+    browserName: 'chrome',
+    "chromeOptions": {
+      'binary': 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+      args: [],
+      extensions: [],
+    }
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
