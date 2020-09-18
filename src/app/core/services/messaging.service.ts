@@ -66,9 +66,15 @@ export class MessagingService {
   }
 
   requestPermission() {
-
     return from(Notification.requestPermission()
-      .then(() => {
+      .then((value) => {
+        if (value === 'default') {
+          return Promise.reject(value);
+        }
+        if (value === 'denied') {
+          this.store.dispatch(CoreActions.message({message: 'Benachrichtigen wurden permanent im Browser deaktiviert. Aktivieren Sie diese manuell.'}));
+          return Promise.reject(value);
+        }
         return this.messaging.getToken();
       })
       .then(token => {
@@ -83,7 +89,7 @@ export class MessagingService {
 
   removePermission(token: string): Observable<void> {
     return defer(async () => {
-      await this.messaging.deleteToken(token);
+      await this.messaging.deleteToken();
       return await this.removeToken(token);
     });
   }
