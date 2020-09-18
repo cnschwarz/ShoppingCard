@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {AuthUser} from './core/state/core/model';
 import {Store} from '@ngrx/store';
 import {selectIsOnline, selectMessages, selectUser, State} from './core/state';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {removeMessage} from './core/state/core/actions';
 import * as CoreActions from './core/state/core/actions';
 
