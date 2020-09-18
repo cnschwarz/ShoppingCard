@@ -4,15 +4,13 @@ import {Store} from '@ngrx/store';
 import {getLists} from '../../state/lists';
 import {List} from '../../model/list';
 import {Observable} from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import {MatDialog} from '@angular/material/dialog';
 import {AddItemDialogComponent} from './add-item-dialog/add-item-dialog.component';
 import {StoreDto} from '../../../core/model/dto';
 import {NotificationData} from '../../../core/state/core/actions';
 import {ListState} from '../../state/lists/reducer';
-import {add, update} from '../../state/lists/actions';
 import {selectNotifications, State} from '../../../core/state';
-import {ItemsActions, ListActions} from '../../state';
+import {ListActions} from '../../state';
 
 
 @Component({

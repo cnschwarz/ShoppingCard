@@ -1,8 +1,7 @@
 import {createReducer, on} from '@ngrx/store';
 import {AuthUser} from './model';
-import {NotificationData} from './actions';
-
 import * as Actions from './actions';
+import {NotificationData} from './actions';
 
 
 export interface CoreState {

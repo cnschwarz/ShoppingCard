@@ -1,7 +1,5 @@
 import {AppPage} from './app.po';
-import {browser, logging, protractor} from 'protractor';
-import {TestBed} from '@angular/core/testing';
-import {Actions} from '@ngrx/effects';
+import {browser, logging} from 'protractor';
 
 describe('workspace-project App', () => {
   let page: AppPage;

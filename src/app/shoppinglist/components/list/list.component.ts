@@ -10,8 +10,6 @@ import * as firebase from 'firebase';
 import {NotificationData} from '../../../core/state/core/actions';
 import {StoreDto} from '../../../core/model/dto';
 import {ListState} from '../../state/lists/reducer';
-import {removeShareList, selectList} from '../../state/lists/actions';
-import {add, remove, update} from '../../state/items/actions';
 import {selectNotificationForList, State} from '../../../core/state';
 import {ItemsActions, ListActions} from '../../state';
 

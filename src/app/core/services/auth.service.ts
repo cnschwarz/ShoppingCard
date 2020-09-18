@@ -6,7 +6,7 @@ import {User as fireBaseUser} from 'firebase';
 import * as firebase from 'firebase/app';
 
 import {AuthConnect, AuthUser, AuthUserSettingsChange} from '../state/core/model';
-import {Observable, from, defer} from 'rxjs';
+import {defer, from, Observable} from 'rxjs';
 import {CoreState} from '../state/core/reducer';
 import {CoreActions} from '../state';
 

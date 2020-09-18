@@ -6,13 +6,6 @@ import {Observable} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthUser} from '../../../core/state/core/model';
 import {selectNotificationToken, selectUser, State} from '../../../core/state';
-import {
-  authConnect,
-  authLogin,
-  authResetPwd,
-  authUserSettingsChanged, notificationGrantRequest,
-  removeNotificationGrant
-} from '../../../core/state/core/actions';
 import * as CoreActions from '../../../core/state/core/actions';
 
 

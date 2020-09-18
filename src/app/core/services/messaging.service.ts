@@ -7,7 +7,7 @@ import {AngularFireMessaging} from '@angular/fire/messaging';
 import {AngularFireAuth} from '@angular/fire/auth';
 
 import {Store} from '@ngrx/store';
-import {from, defer, Observable} from 'rxjs';
+import {defer, from, Observable} from 'rxjs';
 import {take} from 'rxjs/operators';
 
 import {AngularFirestore} from '@angular/fire/firestore';

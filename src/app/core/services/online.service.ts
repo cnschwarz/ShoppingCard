@@ -3,7 +3,6 @@ import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
 
 import {CoreState} from '../state/core/reducer';
-import {netState} from '../state/core/actions';
 import * as CoreActions from '../state/core/actions';
 
 @Injectable({

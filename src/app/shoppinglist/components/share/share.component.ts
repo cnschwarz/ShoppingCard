@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ListState} from '../../state/lists/reducer';
-import {addShareList} from '../../state/lists/actions';
 import {ListActions} from '../../state';
 
 

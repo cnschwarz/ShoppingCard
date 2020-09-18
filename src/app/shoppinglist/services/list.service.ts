@@ -4,12 +4,11 @@ import {Store} from '@ngrx/store';
 import {List} from '../model/list';
 import * as firebase from 'firebase/app';
 import {BaseService} from './base.service';
-import {defer, from} from 'rxjs';
+import {defer} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {CoreState} from '../../core/state/core/reducer';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {readList} from '../state/lists/actions';
 import {ListActions} from '../state';
 
 @Injectable({providedIn: 'root'})

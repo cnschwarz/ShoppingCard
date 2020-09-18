@@ -1,4 +1,4 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {createSelector} from '@ngrx/store';
 import {getShoppingFeature} from '../index';
 import {ListState} from './reducer';
 

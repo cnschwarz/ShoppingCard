@@ -5,7 +5,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {catchError, map, mergeMap, switchMap} from 'rxjs/operators';
 import {selectIsOnline, State} from '..';
 import {Store} from '@ngrx/store';
-import { Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
 import {MessagingService} from '../../services/messaging.service';
 import {

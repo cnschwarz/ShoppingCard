@@ -10,8 +10,6 @@ import * as firebase from 'firebase';
 import {AngularFirestore, DocumentChangeAction} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {CoreState} from '../../core/state/core/reducer';
-import {loadListSuccess} from '../state/lists/actions';
-import {removeSuccess} from '../state/items/actions';
 import {ItemsActions, ListActions} from '../state';
 
 

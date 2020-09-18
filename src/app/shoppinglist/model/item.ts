@@ -1,4 +1,3 @@
-
 import * as firebase from 'firebase';
 import {DTO} from '../../core/model/dto';
 
